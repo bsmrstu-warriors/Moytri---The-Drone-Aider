@@ -25,6 +25,9 @@ using MissionPlanner.Warnings;
 using OpenTK;
 using WebCamService;
 using ZedGraph;
+using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using LogAnalyzer = MissionPlanner.Utilities.LogAnalyzer;
 
 // written by michael oborne
@@ -4220,6 +4223,135 @@ namespace MissionPlanner.GCSViews
         private void gMapControl1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            webBrowser1.Navigate("http://ahsatan.com/tanvir_space/drawcircleServer.html");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            webBrowser1.Navigate("http://ahsatan.com/tanvir_space/nofly.html");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            webBrowser1.Navigate("http://ahsatan.com/tanvir_space/weatherff.html");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+            webBrowser1.Navigate("http://ahsatan.com/tanvir_space/drone.html");
+
+            MySql.Data.MySqlClient.MySqlConnection conn;
+            string myConnectionString;
+
+            myConnectionString = "server=localhost;uid=root;" +
+                "pwd=;database=nasa;";
+
+            try
+            {
+                conn = new MySql.Data.MySqlClient.MySqlConnection(myConnectionString);
+                conn.Open();
+                //MessageBox.Show("Open");
+
+                string qr = "select * from nasa_drone where present = 1";
+                string qr1 = "select * from location";
+
+
+                MySqlCommand cmd1 = new MySqlCommand(qr1, conn);
+                MySqlCommand cmd = new MySqlCommand(qr, conn);
+
+
+                MySqlDataReader reader1 = cmd1.ExecuteReader();
+
+                // label1.Text = string.Empty;
+
+
+                while (reader1.Read())
+                {
+
+                    lat.Add(reader1.GetString("lat"));
+                    lng.Add(reader1.GetString("lng"));
+                }
+
+                reader1.Close();
+
+                //   conn.Close();
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    lat1.Add(reader.GetString("lat"));
+                    lng1.Add(reader.GetString("lng"));
+                }
+
+                reader.Close();
+
+                conn.Close();
+
+                double latt = Double.Parse(lat[0]);
+                double lngg = Double.Parse(lng[0]);
+
+                double latt1 = Double.Parse(lat1[0]);
+                double lngg1 = Double.Parse(lng1[0]);
+
+                double latt2 = Double.Parse(lat1[1]);
+                double lngg2 = Double.Parse(lng1[1]);
+
+
+
+                // MessageBox.Show(" " + latt + " " + lngg + " " + latt1 + " " + lngg1 + " " + latt2 + " " + lngg2);
+
+
+
+                double f_latt1 = latt - latt1; // x1 - x2
+                double f_lngg1 = lngg - lngg1; // y1 -y2
+
+
+                double ldt = f_latt1 * f_latt1;
+                double lgt = f_lngg1 * f_lngg1;
+
+                ldt = ldt + lgt;
+
+                double dis1 = Math.Sqrt(ldt);
+
+
+
+                double f_latt2 = latt - latt2;
+                double f_lngg2 = lngg - lngg2;
+
+
+                double ldt1 = f_latt2 * f_latt2;
+                double lgt1 = f_lngg2 * f_lngg2;
+
+                ldt1 = ldt1 + lgt1;
+
+                double dis2 = Math.Sqrt(ldt1);
+
+                dis1 = dis1 * 100;
+                dis2 = dis2 * 100;
+
+
+
+                //  MessageBox.Show(" " + dis1 + "\n" + dis2);
+
+                string drn = "Distance from My Drone is " + dis1 + "KiloMeter and " + dis2 + "KiloMeter";
+
+                MessageBox.Show(drn);
+
+
+
+
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
