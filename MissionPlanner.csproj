@@ -176,6 +176,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLLs\mtrand.dll</HintPath>
     </Reference>
+    <Reference Include="mysql.data">
+      <HintPath>C:\Users\Klayton\Documents\Visual Studio 2015\Projects\WindowsFormsApplication1\WindowsFormsApplication1\nkl\mysql.data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\MissionPlanner-master\Moytri\DLLs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="ObjectListView">
       <HintPath>packages\Unofficial.ObjectListView.2.6.0\lib\net20\ObjectListView.dll</HintPath>
     </Reference>
