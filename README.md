@@ -17,3 +17,11 @@ We have made our application in a way that it can take the GPS coordinate as inp
 But the uniqueness of our app is we can predict the future position of the drone using linear regression. We can prevent accident by providing minimum safety altitude also warn about no fly zone area. We can provide accurate data at offline using our algorithm. 250KPH wind speed is a normal value to computer but in human life it is a cyclone. Our machine is able to understand that danger. Also it can predict the weather by using the weather parameter also using archive data using Naive Bayes Algorithm.
 Drone operator can visually inspect the sky for avoiding crash with other objects but the line of sight cannot go too much far. So to solve this problem we used Google maps satellite image. Which gives us zoom capability. We have marked the vegetation area with green rectangle and the river is easily understandable from the satellite image. Also we marked the communication tower with Altitude measurement. So drone operator can know which tower is how much high.
 Conventional drone controller does not give these kind of features.
+
+
+Data we used from: 
+- nationalmap.gov
+- weather.gov
+- noaa.gov/weather
+- Google Maps
+- Mission Planner
